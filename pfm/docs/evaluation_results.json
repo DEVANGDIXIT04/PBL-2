@@ -1,0 +1,266 @@
+{
+  "generated_at": "2026-10-02T12:50:58.763915+00:00",
+  "seed": 42,
+  "months": 24,
+  "rows": 1217,
+  "labelled_anomalies": 38,
+  "anomaly_rate": 0.031224322103533278,
+  "n_estimators": 300,
+  "origin_estimators": 100,
+  "anomaly": {
+    "protocol": "Fit on the earliest 70% of transactions, score the latest 30%.",
+    "test_rows": 366,
+    "test_anomalies": 13,
+    "product": {
+      "precision": 0.4666666666666667,
+      "recall": 0.5384615384615384,
+      "f1": 0.5,
+      "support_positive": 13,
+      "flagged": 15,
+      "confusion_matrix": {
+        "tn": 345,
+        "fp": 8,
+        "fn": 6,
+        "tp": 7
+      },
+      "roc_auc": 0.7393767705382436,
+      "pr_auc": 0.563584655113237,
+      "model": "Isolation Forest + MAD (product)"
+    },
+    "baselines": [
+      {
+        "precision": 0.4666666666666667,
+        "recall": 0.5384615384615384,
+        "f1": 0.5,
+        "support_positive": 13,
+        "flagged": 15,
+        "confusion_matrix": {
+          "tn": 345,
+          "fp": 8,
+          "fn": 6,
+          "tp": 7
+        },
+        "roc_auc": 0.7393767705382436,
+        "pr_auc": 0.563584655113237,
+        "model": "Isolation Forest + MAD (product)"
+      },
+      {
+        "precision": 1.0,
+        "recall": 0.15384615384615385,
+        "f1": 0.26666666666666666,
+        "support_positive": 13,
+        "flagged": 2,
+        "confusion_matrix": {
+          "tn": 353,
+          "fp": 0,
+          "fn": 11,
+          "tp": 2
+        },
+        "roc_auc": 0.7398125953366746,
+        "pr_auc": 0.2777624025011591,
+        "model": "Isolation Forest"
+      },
+      {
+        "precision": 0.6,
+        "recall": 0.23076923076923078,
+        "f1": 0.3333333333333333,
+        "support_positive": 13,
+        "flagged": 5,
+        "confusion_matrix": {
+          "tn": 351,
+          "fp": 2,
+          "fn": 10,
+          "tp": 3
+        },
+        "roc_auc": 0.7380692961429507,
+        "pr_auc": 0.48143754085026574,
+        "model": "Z-score rule"
+      },
+      {
+        "precision": 0.4666666666666667,
+        "recall": 0.5384615384615384,
+        "f1": 0.5,
+        "support_positive": 13,
+        "flagged": 15,
+        "confusion_matrix": {
+          "tn": 345,
+          "fp": 8,
+          "fn": 6,
+          "tp": 7
+        },
+        "roc_auc": 0.71671388101983,
+        "pr_auc": 0.5628319602333426,
+        "model": "MAD rule"
+      },
+      {
+        "precision": 1.0,
+        "recall": 0.15384615384615385,
+        "f1": 0.26666666666666666,
+        "support_positive": 13,
+        "flagged": 2,
+        "confusion_matrix": {
+          "tn": 353,
+          "fp": 0,
+          "fn": 11,
+          "tp": 2
+        },
+        "roc_auc": 0.7382872085421661,
+        "pr_auc": 0.4756732672178729,
+        "model": "Local Outlier Factor"
+      },
+      {
+        "precision": 0.4,
+        "recall": 0.3076923076923077,
+        "f1": 0.34782608695652173,
+        "support_positive": 13,
+        "flagged": 10,
+        "confusion_matrix": {
+          "tn": 347,
+          "fp": 6,
+          "fn": 9,
+          "tp": 4
+        },
+        "roc_auc": 0.6273697973414688,
+        "pr_auc": 0.3106376961011821,
+        "model": "One-Class SVM"
+      }
+    ],
+    "sensitivity": [
+      {
+        "precision": 1.0,
+        "recall": 0.07692307692307693,
+        "f1": 0.14285714285714285,
+        "support_positive": 13,
+        "flagged": 1,
+        "confusion_matrix": {
+          "tn": 353,
+          "fp": 0,
+          "fn": 12,
+          "tp": 1
+        },
+        "roc_auc": 0.7398125953366746,
+        "pr_auc": 0.2777624025011591,
+        "contamination": 0.01
+      },
+      {
+        "precision": 1.0,
+        "recall": 0.07692307692307693,
+        "f1": 0.14285714285714285,
+        "support_positive": 13,
+        "flagged": 1,
+        "confusion_matrix": {
+          "tn": 353,
+          "fp": 0,
+          "fn": 12,
+          "tp": 1
+        },
+        "roc_auc": 0.7398125953366746,
+        "pr_auc": 0.2777624025011591,
+        "contamination": 0.02
+      },
+      {
+        "precision": 0.375,
+        "recall": 0.23076923076923078,
+        "f1": 0.2857142857142857,
+        "support_positive": 13,
+        "flagged": 8,
+        "confusion_matrix": {
+          "tn": 348,
+          "fp": 5,
+          "fn": 10,
+          "tp": 3
+        },
+        "roc_auc": 0.7398125953366746,
+        "pr_auc": 0.2777624025011591,
+        "contamination": 0.05
+      },
+      {
+        "precision": 0.19230769230769232,
+        "recall": 0.38461538461538464,
+        "f1": 0.2564102564102564,
+        "support_positive": 13,
+        "flagged": 26,
+        "confusion_matrix": {
+          "tn": 332,
+          "fp": 21,
+          "fn": 8,
+          "tp": 5
+        },
+        "roc_auc": 0.7398125953366746,
+        "pr_auc": 0.2777624025011591,
+        "contamination": 0.1
+      },
+      {
+        "precision": 0.20588235294117646,
+        "recall": 0.5384615384615384,
+        "f1": 0.2978723404255319,
+        "support_positive": 13,
+        "flagged": 34,
+        "confusion_matrix": {
+          "tn": 326,
+          "fp": 27,
+          "fn": 6,
+          "tp": 7
+        },
+        "roc_auc": 0.7398125953366746,
+        "pr_auc": 0.2777624025011591,
+        "contamination": "auto"
+      }
+    ]
+  },
+  "forecast": {
+    "protocol": "Monthly expense totals, rolling origin, one-step horizon. Each origin refits Isolation Forest on past rows only and replaces flagged amounts with the category median before exponential smoothing.",
+    "origins": 12,
+    "models": [
+      {
+        "model": "naive",
+        "mae": 3050.0491666666676,
+        "rmse": 4154.660590783361,
+        "mape": 6.561484966890492,
+        "n": 12.0
+      },
+      {
+        "model": "moving_average",
+        "mae": 2912.894166666672,
+        "rmse": 3630.8045803741293,
+        "mape": 6.443963833326369,
+        "n": 12.0
+      },
+      {
+        "model": "exponential_smoothing_raw",
+        "mae": 2764.774117588158,
+        "rmse": 3620.1644300122616,
+        "mape": 6.065934258953055,
+        "n": 12.0
+      },
+      {
+        "model": "exponential_smoothing_adjusted",
+        "mae": 3905.2740896545215,
+        "rmse": 4801.719586230898,
+        "mape": 8.352379558683625,
+        "n": 12.0
+      }
+    ],
+    "mape_raw": 6.065934258953055,
+    "mape_adjusted": 8.352379558683625,
+    "adjusted_mape_lower": false
+  },
+  "canonical_outlier": {
+    "train_outlier": 9500.0,
+    "typical_spend": 3000.0,
+    "mae_raw": 3640.0,
+    "mae_adjusted": 0.0,
+    "adjusted_is_better": true,
+    "raw_forecast": [
+      6120.0,
+      6640.0,
+      7160.0
+    ],
+    "adjusted_forecast": [
+      3000.0,
+      3000.0,
+      3000.0
+    ]
+  },
+  "notes": "Anomaly metrics are a temporal holdout, not in-sample scores. On the controlled INR 9,500 series, replacing the outlier drops forecast MAE from the raw fit to zero. On the synthetic walk-forward the monthly totals are already smooth, so the adjusted MAPE is not lower: some normal rows are replaced too, and a future spike is still scored against the actual total. The adjusted model only changes the training series."
+}

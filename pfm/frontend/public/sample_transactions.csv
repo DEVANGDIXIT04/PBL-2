@@ -1,0 +1,6 @@
+date,amount,type,category,description,merchant
+2026-09-01,80000,income,Salary,September salary,Northwind Labs
+2026-09-03,22000,expense,Rent,House rent,Landlord
+2026-09-05,420,expense,Food,Dinner,Swiggy
+2026-09-06,180,expense,Transport,Cab home,Uber
+2026-09-12,9500,expense,Shopping,One-off gadget,UNKNOWN-WIRE

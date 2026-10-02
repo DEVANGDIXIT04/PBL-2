@@ -1,0 +1,47 @@
+services:
+  db:
+    image: postgres:15
+    environment:
+      POSTGRES_USER: pfm
+      POSTGRES_PASSWORD: pfm
+      POSTGRES_DB: pfm
+    ports:
+      - "5432:5432"
+    volumes:
+      - pgdata:/var/lib/postgresql/data
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U pfm -d pfm"]
+      interval: 5s
+      timeout: 5s
+      retries: 20
+
+  api:
+    build:
+      context: ./backend
+    environment:
+      DATABASE_URL: postgresql+psycopg://pfm:pfm@db:5432/pfm
+      SECRET_KEY: ${SECRET_KEY:-dev-only-change-me}
+      CORS_ORIGINS: http://localhost:3000
+      ENABLE_SCHEDULER: "true"
+      MODEL_DIR: /app/models
+      LOG_LEVEL: INFO
+    ports:
+      - "8000:8000"
+    depends_on:
+      db:
+        condition: service_healthy
+    volumes:
+      - modeldata:/app/models
+
+  frontend:
+    build:
+      context: ./frontend
+    ports:
+      - "3000:80"
+    depends_on:
+      api:
+        condition: service_healthy
+
+volumes:
+  pgdata:
+  modeldata:

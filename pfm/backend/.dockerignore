@@ -1,0 +1,12 @@
+__pycache__/
+.pytest_cache/
+.mypy_cache/
+.venv/
+*.pyc
+.env
+*.db
+node_modules/
+dist/
+.coverage
+htmlcov/
+*.joblib

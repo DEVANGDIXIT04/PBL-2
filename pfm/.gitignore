@@ -1,0 +1,15 @@
+__pycache__/
+.pytest_cache/
+.mypy_cache/
+.ruff_cache/
+.venv/
+venv/
+*.pyc
+.env
+*.db
+.coverage
+htmlcov/
+backend/models/*.joblib
+backend/.test_models/
+frontend/node_modules/
+frontend/dist/

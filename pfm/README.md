@@ -74,7 +74,7 @@ More detail, including the nightly retrain, is in [docs/architecture.md](docs/ar
 
 Accounts with fewer than 50 transactions are scored with a global Isolation Forest trained on the synthetic generator. Larger accounts get their own model (`n_estimators=300`, `contamination=0.03`, `random_state=42`). A category amount above median + 3×MAD, and at least double the usual amount, is flagged as well. The stored reason is the two features that deviate most from that category, not a fixed sentence.
 
-Before forecasting, flagged expense amounts are replaced with the category median. The raw series stays on the chart. Holt-Winters with a seasonal component is used only when there are at least 24 months; otherwise the fit is Holt, simple exponential smoothing, or a short moving average.
+Before forecasting, a flagged expense is replaced with the category median only when it is at least three times that median. Milder flags stay in the series so a normal month is not pulled down. The raw series stays on the chart. Holt-Winters with a seasonal component is used only when there are at least 24 months; otherwise the fit is Holt, simple exponential smoothing, or a short moving average.
 
 ## Evaluation
 
@@ -86,7 +86,7 @@ Before forecasting, flagged expense amounts are replaced with the category media
 
 ![Contamination sensitivity](docs/figures/contamination_sensitivity.png)
 
-The Review 3 bug — an INR 9,500 outlier pulling the next forecast — is covered by `tests/test_ml.py` and by the evaluation report. On that series the raw forecast MAE is 3640 and the adjusted MAE is 0. On the 24-month synthetic holdout the product detector (Isolation Forest plus the MAD rule) reaches precision 0.467, recall 0.538, F1 0.500, ROC-AUC 0.739. Walk-forward monthly MAPE is 6.07% raw and 8.35% adjusted: the history is already smooth, so replacing a few normal rows does not help, which the report states directly.
+The Review 3 bug — an INR 9,500 outlier pulling the next forecast — is covered by `tests/test_ml.py` and by the evaluation report. On that series the raw forecast MAE is 3640 and the adjusted MAE is 0. On the 24-month synthetic holdout the product detector (Isolation Forest plus the MAD rule) reaches precision 0.467, recall 0.538, F1 0.500, ROC-AUC 0.739. Walk-forward MAPE on the next month after labelled spikes are removed is 6.24% raw and 5.26% adjusted. Against the raw total, which still includes a future spike, those forecasts score 6.07% and 7.68%.
 
 ## Tests and CI
 

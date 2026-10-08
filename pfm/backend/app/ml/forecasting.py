@@ -113,7 +113,14 @@ def _rolling_fitted(series: np.ndarray) -> np.ndarray:
 
 
 def replace_anomalies(expenses: pd.DataFrame) -> pd.DataFrame:
-    """Replace flagged expense amounts with the median of the unflagged ones."""
+    """Replace large flagged spikes with the median of the other amounts.
+
+    A mild flag is left alone. Swapping every flagged row for the median pulls
+    a normal month down, and the next-month forecast then undershoots. A row
+    is replaced only when it is flagged and at least three times the median of
+    the other amounts in that category. The INR 9,500 case is about 3.2 times
+    a 3,000 month, so it is still removed.
+    """
     work = expenses.copy()
     if work.empty or "is_anomaly" not in work.columns:
         return work
@@ -122,10 +129,16 @@ def replace_anomalies(expenses: pd.DataFrame) -> pd.DataFrame:
     for category, indexes in work.groupby("category", sort=False).groups.items():
         del category
         subset = work.loc[list(indexes)]
-        normal = subset.loc[~subset["is_anomaly"], "amount"]
-        median = float(normal.median()) if len(normal) else float(subset["amount"].median())
-        hit = subset.index[subset["is_anomaly"].to_numpy()]
-        work.loc[hit, "amount"] = median
+        flagged = subset["is_anomaly"].to_numpy()
+        amounts = subset["amount"].to_numpy(dtype=float)
+        baseline = amounts[~flagged]
+        if len(baseline) == 0:
+            baseline = amounts
+        median = float(np.median(baseline))
+        if not np.isfinite(median):
+            continue
+        spike = flagged & (amounts >= max(median * 3.0, median + 1.0))
+        work.loc[subset.index[spike], "amount"] = median
     return work
 
 

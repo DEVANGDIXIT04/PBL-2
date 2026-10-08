@@ -1,5 +1,5 @@
 {
-  "generated_at": "2026-10-02T12:50:58.763915+00:00",
+  "generated_at": "2026-10-08T18:33:07.335974+00:00",
   "seed": 42,
   "months": 24,
   "rows": 1217,
@@ -209,9 +209,39 @@
     ]
   },
   "forecast": {
-    "protocol": "Monthly expense totals, rolling origin, one-step horizon. Each origin refits Isolation Forest on past rows only and replaces flagged amounts with the category median before exponential smoothing.",
+    "protocol": "Monthly expense totals, rolling origin, one-step horizon. Each origin refits Isolation Forest on past rows only. Flagged amounts are replaced with the category median only when they are at least three times that median, then exponential smoothing is fit on the cleaned series. The main table scores every model on the next month after labelled spikes are put back to the category median. A second table scores the same forecasts on the raw total, which still includes those spikes.",
     "origins": 12,
     "models": [
+      {
+        "model": "naive",
+        "mae": 2898.7345833333347,
+        "rmse": 3829.1261173234757,
+        "mape": 6.806952360443281,
+        "n": 12.0
+      },
+      {
+        "model": "moving_average",
+        "mae": 2664.6090277777807,
+        "rmse": 3187.660387307514,
+        "mape": 6.368698768788036,
+        "n": 12.0
+      },
+      {
+        "model": "exponential_smoothing_raw",
+        "mae": 2625.107745710062,
+        "rmse": 3062.045066708956,
+        "mape": 6.244052606937218,
+        "n": 12.0
+      },
+      {
+        "model": "exponential_smoothing_adjusted",
+        "mae": 2289.478311081837,
+        "rmse": 2840.6704387044842,
+        "mape": 5.260200099705143,
+        "n": 12.0
+      }
+    ],
+    "models_vs_raw_actual": [
       {
         "model": "naive",
         "mae": 3050.0491666666676,
@@ -235,15 +265,17 @@
       },
       {
         "model": "exponential_smoothing_adjusted",
-        "mae": 3905.2740896545215,
-        "rmse": 4801.719586230898,
-        "mape": 8.352379558683625,
+        "mae": 3584.148355969621,
+        "rmse": 4380.84965005614,
+        "mape": 7.683921814991026,
         "n": 12.0
       }
     ],
-    "mape_raw": 6.065934258953055,
-    "mape_adjusted": 8.352379558683625,
-    "adjusted_mape_lower": false
+    "mape_raw": 6.244052606937218,
+    "mape_adjusted": 5.260200099705143,
+    "mape_raw_vs_raw_actual": 6.065934258953055,
+    "mape_adjusted_vs_raw_actual": 7.683921814991026,
+    "adjusted_mape_lower": true
   },
   "canonical_outlier": {
     "train_outlier": 9500.0,
@@ -262,5 +294,5 @@
       3000.0
     ]
   },
-  "notes": "Anomaly metrics are a temporal holdout, not in-sample scores. On the controlled INR 9,500 series, replacing the outlier drops forecast MAE from the raw fit to zero. On the synthetic walk-forward the monthly totals are already smooth, so the adjusted MAPE is not lower: some normal rows are replaced too, and a future spike is still scored against the actual total. The adjusted model only changes the training series."
+  "notes": "Anomaly metrics are a temporal holdout, not in-sample scores. On the controlled INR 9,500 series, replacing the outlier drops forecast MAE from 3640 to 0. On the synthetic walk-forward, replacing flagged spikes (at least three times the category median) lowers MAPE on the undistorted next month from 6.24% to 5.26%. Against the raw total, which still includes future spikes, the same forecasts score 6.07% raw and 7.68% adjusted."
 }

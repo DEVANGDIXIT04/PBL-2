@@ -20,7 +20,7 @@ flowchart LR
 2. Every transaction, budget, and anomaly query filters on `user_id`. A missing row and another user's row both return 404.
 3. After writes, the anomaly service scores the account. Accounts with fewer than 50 transactions use a global forest trained on the synthetic generator. Larger accounts get their own forest (`n_estimators=300`, `contamination=0.03`, `random_state=42`). `0.03` matches the rate of injected anomalies; the sensitivity table in the evaluation report includes `"auto"`.
 4. A median-absolute-deviation rule flags an amount above the category median plus three MADs. The stored reason is the two features that deviate most from that category.
-5. The forecast builds monthly or weekly expense totals twice: once raw, once after replacing flagged amounts with the category median. Exponential smoothing fits both. Seasonal Holt-Winters is used only when there are at least 24 months (or 104 weeks). Shorter series use Holt, simple exponential smoothing, or a 3-point moving average.
+5. The forecast builds monthly or weekly expense totals twice: once raw, once after replacing a flagged amount with the category median when it is at least three times that median. Exponential smoothing fits both. Seasonal Holt-Winters is used only when there are at least 24 months (or 104 weeks). Shorter series use Holt, simple exponential smoothing, or a 3-point moving average.
 
 ## Nightly retrain
 

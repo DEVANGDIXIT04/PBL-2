@@ -13,7 +13,7 @@ What to show:
 
 ## The Review 3 forecast bug
 
-A single INR 9,500 expense was left in the series, and exponential smoothing carried it into the next period. The fit now replaces flagged amounts with the category median before training. The original series stays on the chart. `tests/test_ml.py::test_adjusted_forecast_error_is_lower_than_raw` asserts that the adjusted MAE on that series is lower than the raw MAE. The same comparison is printed in `docs/evaluation.md`.
+A single INR 9,500 expense was left in the series, and exponential smoothing carried it into the next period. The fit now replaces a flagged amount with the category median only when it is at least three times that median, so a mild flag does not pull a normal month down. The original series stays on the chart. `tests/test_ml.py::test_adjusted_forecast_error_is_lower_than_raw` asserts that the adjusted MAE on that series is lower than the raw MAE. The same comparison is printed in `docs/evaluation.md`. Walk-forward MAPE is scored on the next month after labelled spikes are put back to the category median, because the forecast is of typical spending. The raw total, spikes included, is in the same report.
 
 ## Still rough
 

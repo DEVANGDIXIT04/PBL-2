@@ -18,13 +18,13 @@ jobs:
       - name: Install
         run: python -m pip install -r requirements-dev.txt
       - name: Ruff
-        run: ruff check app tests
+        run: python -m ruff check app tests
       - name: Black
-        run: black --check app tests alembic
+        run: python -m black --check app tests alembic
       - name: Mypy
-        run: mypy app
+        run: python -m mypy app
       - name: Pytest
-        run: pytest
+        run: python -m pytest
 
   images:
     runs-on: ubuntu-latest
